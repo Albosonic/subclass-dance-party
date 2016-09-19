@@ -26,7 +26,8 @@ body, a:link, a:visited, a:active{
   position:absolute;
 }
 .gifDancer{
-  border:10px solid green;
-  border-radius:10px;
+  /*background-image: url("assets/polarBear.png");*/
+  height:20px;
+  width:20px;
   position:absolute; 
 }
