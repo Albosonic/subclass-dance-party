@@ -25,3 +25,8 @@ body, a:link, a:visited, a:active{
   border-radius:10px;
   position:absolute;
 }
+.gifDancer{
+  border:10px solid green;
+  border-radius:10px;
+  position:absolute; 
+}
