@@ -1,38 +1,48 @@
 $(document).ready(function() {
   window.dancers = [];
 
-  $('.addDancerButton').on('click', function(event) {
-    /* This function sets up the click handlers for the create-dancer
-     * buttons on dancefloor.html. You should only need to make one small change to it.
-     * As long as the "data-dancer-maker-function-name" attribute of a
-     * class="addDancerButton" DOM node matches one of the names of the
-     * maker functions available in the global scope, clicking that node
-     * will call the function to make the dancer.
-     */
+var addAvatarButtonHandlers = function() {
+  $('.chooseAvatarButton').on('click', function(event) {
 
-    /* dancerMakerFunctionName is a string which must match
-     * one of the dancer maker functions available in global scope.
-     * A new object of the given type will be created and added
-     * to the stage.
-     */
-    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    var dancerMakerFunctionName = $(event.target).data('dancer-maker-function-name');
+    var dancerAvatar = $(event.target).data('dancer-image');
 
-    // get the maker function for the kind of dancer we're supposed to make
+
     var dancerMakerFunction = window[dancerMakerFunctionName];
-
-    // make a dancer with a random position
 
     var dancer = new dancerMakerFunction(
       $("body").height() * Math.random(),
       $("body").width() * Math.random(),
       Math.random() * 1000,
-      'movingWolf.gif'
+      dancerAvatar
     );
     $('body').append(dancer.$node);
-    addDancerMouseOver(dancer);
-    addDancerMouseLeave(dancer);
+    dancer.addEventHandlers();
+    // addDancerMouseOver(dancer);
+    // addDancerMouseLeave(dancer);
     window.dancers.push(dancer);
+    $('.chooseAvatarButton').remove();
   });
+};
+
+$('.addDancerButton').on('click', function(event) {
+
+  var dancerType = $(event.target).data('dancer-maker-function-name');
+  var $dropDown = $('<a href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="movingWolf.gif">Wolf</a>');
+  $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
+  $('body').append($dropDown);
+
+  var $dropDown = $('<a href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="narwhal.gif">Narwhal</a>');
+  $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight * 2, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
+  $('body').append($dropDown);
+
+  var $dropDown = $('<a href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="polarBear.png">polarBear</a>');
+  $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight * 3, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
+  $('body').append($dropDown);
+  
+  addAvatarButtonHandlers();
+
+});
 
 
   $('.lineUpButton').on('click', function(event) {
@@ -48,25 +58,30 @@ $(document).ready(function() {
 });
 
 var lineUp = function() {
+  
+  
+  var spacing = ($('body').width() - 200) / dancers.length;
   for (var i = 0; i < dancers.length; i++) {
-    dancers[i].lineUp();
+    clearTimeout(dancers[i].stepInstance);
+    dancers[i].setPosition($('body').height() / 2, 100 + (spacing * i));
   }
 };
 
-var addDancerMouseOver = function(dancer) {
-  dancer.originalSpeed = dancer.timeBetweenSteps;
-  dancer.$node.on('mouseenter', function() {
-    dancer.timeBetweenSteps=100000;
-    console.log(dancer.timeBetweenSteps);
-  });
-};
 
-var addDancerMouseLeave = function(dancer) {
-  dancer.$node.on('mouseleave', function() {
-    dancer.timeBetweenSteps=dancer.originalSpeed;
-    dancer.step();
-    console.log(dancer.timeBetweenSteps);
-  });
-};
+
+// var addDancerMouseOver = function(dancer) {
+//   dancer.originalSpeed = dancer.timeBetweenSteps;
+//   dancer.$node.on('mouseenter', function() {
+//     clearTimeout(dancer.stepInstance);
+//     console.log(dancer.timeBetweenSteps);
+//   });
+// };
+
+// var addDancerMouseLeave = function(dancer) {
+//   dancer.$node.on('mouseleave', function() {
+//     dancer.step();
+//     console.log(dancer.timeBetweenSteps);
+//   });
+// };
 
   

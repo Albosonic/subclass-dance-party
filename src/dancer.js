@@ -2,6 +2,8 @@ var makeDancer = function(top, left, timeBetweenSteps, image, danceClass) {
   this.$node = $('<image class="dancer" src= "assets/' + image + '"/>');
   this.top = top;
   this.left = left;
+  this.stepInstance;
+  this.isBeingDragged = false;
   this.timeBetweenSteps = timeBetweenSteps;
   this.setPosition(this.top, this.left);
   this.step();
@@ -10,7 +12,7 @@ var makeDancer = function(top, left, timeBetweenSteps, image, danceClass) {
 makeDancer.prototype.step = function() {
   // the basic dancer doesn't do anything interesting at all on each step,
   // it just schedules the next step
-  setTimeout(this.step.bind(this), this.timeBetweenSteps);
+  this.stepInstance = setTimeout(this.step.bind(this), this.timeBetweenSteps);
 };
 
 makeDancer.prototype.setPosition = function(top, left) {
@@ -18,14 +20,38 @@ makeDancer.prototype.setPosition = function(top, left) {
   // where it belongs on the page. See http://api.jquery.com/css/
   //
   var styleSettings = {
-    top: top,
-    left: left
+    top: this.top = top,
+    left: this.left = left
   };
   this.$node.css(styleSettings);
 };
 
-makeDancer.prototype.lineUp = function() {
-  this.$node.css({left: '200px'});
+
+makeDancer.prototype.addEventHandlers = function () {
+  var thisDancer = this;
+  var thisNode = this.$node;
+  
+  // Click and drag behavior.
+  thisNode.on('mousedown', function() {
+    if (thisDancer.isBeingDragged === false) {
+      clearTimeout(thisDancer.stepInstance);
+      thisDancer.isBeingDragged = true;
+      $('body').on('mousemove', function(event) {
+        var position = {
+          top: thisDancer.top = event.clientY - thisNode.height() / 2,
+          left: thisDancer.left = event.clientX - thisNode.width() / 2
+        };
+        thisNode.css(position);
+      });
+    } else {
+      thisDancer.isBeingDragged = false;
+      $('body').off('mousemove');
+      thisDancer.step();
+    }
+  });
+  // END click and drag behavior.
+
+
 };
 
 // // Creates and returns a new dancer object that can step
