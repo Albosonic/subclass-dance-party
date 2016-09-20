@@ -29,6 +29,26 @@ $(document).ready(function() {
       'movingWolf.gif'
     );
     $('body').append(dancer.$node);
+    window.dancers.push(dancer);
   });
+
+
+  $('.lineUpButton').on('click', function(event) {
+
+
+    var lineUpFunctionName = $(this).data('line-up-function');
+    var lineUpFunction = window[lineUpFunctionName];
+
+    lineUpFunction();
+
+  });
+
 });
 
+var lineUp = function() {
+  for (var i = 0; i < dancers.length; i++) {
+    dancers[i].lineUp();
+  }
+};
+
+  

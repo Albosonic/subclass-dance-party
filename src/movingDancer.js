@@ -19,3 +19,7 @@ movingDancer.prototype.step = function () {
     this.$node.animate({left:this.animationLocation});
   }
 };
+
+movingDancer.prototype.lineUp = function() {
+  this.left = 200;
+};
