@@ -25,10 +25,6 @@ makeDancer.prototype.setPosition = function(top, left) {
 };
 
 makeDancer.prototype.lineUp = function() {
-  // var styleSettings = {
-    
-  //   left: left
-  // };
   this.$node.css({left: '200px'});
 };
 

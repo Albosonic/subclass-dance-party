@@ -29,6 +29,8 @@ $(document).ready(function() {
       'movingWolf.gif'
     );
     $('body').append(dancer.$node);
+    addDancerMouseOver(dancer);
+    addDancerMouseLeave(dancer);
     window.dancers.push(dancer);
   });
 
@@ -49,6 +51,22 @@ var lineUp = function() {
   for (var i = 0; i < dancers.length; i++) {
     dancers[i].lineUp();
   }
+};
+
+var addDancerMouseOver = function(dancer) {
+  dancer.originalSpeed = dancer.timeBetweenSteps;
+  dancer.$node.on('mouseenter', function() {
+    dancer.timeBetweenSteps=100000;
+    console.log(dancer.timeBetweenSteps);
+  });
+};
+
+var addDancerMouseLeave = function(dancer) {
+  dancer.$node.on('mouseleave', function() {
+    dancer.timeBetweenSteps=dancer.originalSpeed;
+    dancer.step();
+    console.log(dancer.timeBetweenSteps);
+  });
 };
 
   

@@ -12,11 +12,13 @@ var makeDancerStep = movingDancer.prototype.step;
 movingDancer.prototype.step = function () {
   makeDancerStep.call(this);
   if (this.animationLocation === this.left + 100 + 'px') {  
-    this.animationLocation = this.left - 100 + 'px'
-    this.$node.animate({left:this.animationLocation});
+    this.$node.css({transform: 'scaleX(-1)'});
+    this.animationLocation = this.left - 100 + 'px';
+    this.$node.animate({left: this.animationLocation}, this.timeBetweenSteps-1);
   } else {
-    this.animationLocation = this.left + 100 + 'px'
-    this.$node.animate({left:this.animationLocation});
+    this.$node.css({transform: 'scaleX(1)'});
+    this.animationLocation = this.left + 100 + 'px';
+    this.$node.animate({left: this.animationLocation}, this.timeBetweenSteps-1);
   }
 };
 

@@ -9,11 +9,14 @@ resizingDancer.prototype = Object.create(makeDancer.prototype);
 var makeDancerStep = resizingDancer.prototype.step;
 
 resizingDancer.prototype.step = function () {
+  console.log('step called');
   makeDancerStep.call(this);
-  if (this.$node.width()<=100) {
-    this.$node.animate({width:'200px',height:'200px'});
+  if (this.$node.width() <= 100) {
+    this.$node.css({transform: 'scaleX(-1)'});
+    this.$node.animate({width: '200px', height: '200px'}, this.timeBetweenSteps - 100);
   } else {
-    this.$node.animate({width:'100px',height:'100px'});
+    this.$node.css({transform: 'scaleX(1)'});
+    this.$node.animate({width: '100px', height: '100px'}, this.timeBetweenSteps - 100);
   }
 
 };
