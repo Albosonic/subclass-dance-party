@@ -1,3 +1,5 @@
+
+
 $(document).ready(function() {
   window.dancers = [];
 
@@ -13,7 +15,7 @@ var addAvatarButtonHandlers = function() {
     var dancer = new dancerMakerFunction(
       $("body").height() * Math.random(),
       $("body").width() * Math.random(),
-      Math.random() * 1000,
+      (Math.random() * 1000) + 500,
       dancerAvatar
     );
     $('body').append(dancer.$node);
@@ -28,16 +30,24 @@ var addAvatarButtonHandlers = function() {
 $('.addDancerButton').on('click', function(event) {
 
   var dancerType = $(event.target).data('dancer-maker-function-name');
-  var $dropDown = $('<a href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="movingWolf.gif">Wolf</a>');
+  var $dropDown = $('<button href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="movingWolf.gif">Wolf</button>');
   $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
   $('body').append($dropDown);
 
-  var $dropDown = $('<a href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="narwhal.gif">Narwhal</a>');
+  var $dropDown = $('<button href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="narwhal.gif">Narwhal</button>');
   $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight * 2, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
   $('body').append($dropDown);
 
-  var $dropDown = $('<a href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="polarBear.png">polarBear</a>');
+  var $dropDown = $('<button href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="polarBear.png">Polar Bear</button>');
   $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight * 3, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
+  $('body').append($dropDown);
+
+  var $dropDown = $('<button href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="dragon.png">Dragon</button>');
+  $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight * 4, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
+  $('body').append($dropDown);
+
+  var $dropDown = $('<button href="#" class="chooseAvatarButton" data-dancer-maker-function-name="' + dancerType + '" data-dancer-image="fish.png">Fish</button>');
+  $dropDown.css({top: event.target.offsetTop + event.target.offsetHeight * 5, left: event.target.offsetLeft, width: event.target.offsetWidth, height: event.target.offsetHeight, position: 'absolute'});
   $('body').append($dropDown);
   
   addAvatarButtonHandlers();
@@ -57,17 +67,19 @@ $('.addDancerButton').on('click', function(event) {
 
 });
 
+var linedUp = false;
+
 var lineUp = function() {
-  
-  
   var spacing = ($('body').width() - 200) / dancers.length;
+  linedUp = true;
   for (var i = 0; i < dancers.length; i++) {
     clearTimeout(dancers[i].stepInstance);
+    dancers[i].$node.stop();
+    dancers[i].$node.off();
+    dancers[i].addEventHandlers();
     dancers[i].setPosition($('body').height() / 2, 100 + (spacing * i));
   }
 };
-
-
 
 // var addDancerMouseOver = function(dancer) {
 //   dancer.originalSpeed = dancer.timeBetweenSteps;

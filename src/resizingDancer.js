@@ -9,7 +9,6 @@ resizingDancer.prototype = Object.create(makeDancer.prototype);
 var makeDancerStep = resizingDancer.prototype.step;
 
 resizingDancer.prototype.step = function () {
-  console.log('step called');
   makeDancerStep.call(this);
   if (this.$node.width() <= 100) {
     this.$node.css({transform: 'scaleX(-1)'});

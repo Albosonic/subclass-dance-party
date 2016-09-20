@@ -4,7 +4,7 @@ body, html{
 body{
   margin: 0px;
   background-color:#444;
-  background-image:url("assets/funkyfloors.jpg");
+  background-image:url("assets/funkyfloors.png");
   background-repeat:no-repeat;
   background-size: 100% 100%;
   font-size: 18px;
@@ -16,11 +16,14 @@ body, a:link, a:visited, a:active{
   padding:5px 12px;
   float:right;
 }
-.title, .chooseAvatarButton{
-  padding:5px 12px;
+.title, .chooseAvatarButton, button{
   position: absolute;
-
+  border: 2px solid black;
+  font-color: black;
+  background:linear-gradient(lightblue,white);
 }
+
+
 .topbar{
   height:32px;
   background-color: #555;
